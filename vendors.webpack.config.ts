@@ -24,7 +24,7 @@ export default function vendorsWebpack() {
     mode: 'development',
     entry: { vendors },
     output: {
-      path: path.join(basePath, 'node_modules', '@dlive-superchats/dll'),
+      path: path.join(basePath, 'dll'),
       filename: '[name].dll.js',
       library: '[name]_[hash]',
     },
@@ -33,11 +33,7 @@ export default function vendorsWebpack() {
       new webpack.DllPlugin({
         context: __dirname,
         name: '[name]_[hash]',
-        path: path.resolve(
-          basePath,
-          'node_modules/@dlive-superchats/dll',
-          '[name]-manifest.json',
-        ),
+        path: path.resolve(basePath, 'dll', '[name]-manifest.json'),
       }),
     ],
     optimization: {

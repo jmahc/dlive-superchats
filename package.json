@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "dev": "webpack --profile --progress --env vendors --config ./vendors.webpack.config.ts",
     "postinstall": "echo \"Don't forget to run the `dev` script to install vendor dependencies if this is your first time running the application or you have added new application dependencies.\"",
-    "start": "webpack-dev-server --progress -w"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress -w"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +37,7 @@
     "babel-loader": "^8.0.6",
     "chalk": "^3.0.0",
     "color": "^3.1.2",
+    "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "dayjs": "^1.8.19",
     "debug": "^4.1.1",

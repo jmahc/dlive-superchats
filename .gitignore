@@ -1,3 +1,5 @@
 node_modules
 dist
 ws-proxy
+.env
+dll
