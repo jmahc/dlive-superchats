@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <base href="/" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Dlive Superchats</title>
-    <meta charset="utf-8" />
-
+    <title><%= htmlWebpackPlugin.options.title %></title>
     <meta
       name="viewport"
       content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
@@ -14,10 +13,16 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans|Poppins:400,500|Roboto:400,500&display=swap"
       rel="stylesheet"
     />
-
     <style></style>
   </head>
   <body>
     <div id="app"></div>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <!-- Injects the manifest.json file -->
+    <%= htmlWebpackPlugin.files.webpackManifest %>
+    <!-- Injects the manifest.[hash].js file -->
+    <%= htmlWebpackPlugin.files.manifest %>
   </body>
 </html>

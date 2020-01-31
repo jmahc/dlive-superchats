@@ -1,7 +1,17 @@
-import webpack = require('webpack')
-import HtmlWebpackPlugin = require('html-webpack-plugin')
+import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin'
 import chalk from 'chalk'
+import fs from 'fs'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import path from 'path'
+import webpack from 'webpack'
+
+const currentDir = process.cwd()
+const appDirectory = fs.realpathSync(currentDir)
+const resolvePath = (relativePath: string) =>
+  path.resolve(appDirectory, relativePath)
+
 let env: any = {}
+
 try {
   env = require('dotenv-safe').config().parsed
 } catch (e) {
@@ -26,9 +36,38 @@ const config: webpack.Configuration = {
   entry: './src',
 
   plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
     new webpack.DefinePlugin({
       ...envStrings,
+    }),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: resolvePath(
+        'node_modules/@dlive-superchats/dll/vendors-manifest.json',
+      ),
+    }),
+    new HtmlWebpackPlugin({
+      chunksSortMode: 'auto',
+      filename: 'index.html',
+      inject: true,
+      minify: {
+        collapseWhitespace: true,
+        keepClosingSlash: true,
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
+        removeComments: true,
+        removeEmptyAttributes: true,
+        removeRedundantAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+      },
+      template: './src/index.html',
+      title: 'Dlive Superchats',
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: resolvePath(
+        'node_modules/@dlive-superchats/dll/vendors.dll.js',
+      ),
     }),
   ],
 
@@ -40,28 +79,7 @@ const config: webpack.Configuration = {
         use: {
           loader: 'babel-loader',
           options: {
-            plugins: [
-              [
-                'babel-plugin-styled-components',
-                {
-                  ssr: false,
-                },
-              ],
-              '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-proposal-optional-chaining',
-            ],
-            presets: [
-              '@babel/preset-typescript',
-              '@babel/preset-react',
-              [
-                '@babel/preset-env',
-                {
-                  targets: {
-                    chrome: 80,
-                  },
-                },
-              ],
-            ],
+            configFile: resolvePath('babel.config.js'),
           },
         },
       },
