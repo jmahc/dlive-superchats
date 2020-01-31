@@ -1,6 +1,3 @@
-/**
- * This file handles the babel configuration for the API/server directory.
- */
 module.exports = {
   comments: false,
   presets: [
