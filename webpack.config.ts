@@ -78,9 +78,6 @@ const config: webpack.Configuration = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            configFile: resolvePath('babel.config.js'),
-          },
         },
       },
       {
