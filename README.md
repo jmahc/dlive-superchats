@@ -17,6 +17,12 @@ Install dependencies
 yarn
 ```
 
+Create a DLL file for application dependencies, if this is your first time cloning the application or you have added a new project dependency that will be bundled with the application (packages found in the `dependencies` section of the `package.json` file).
+
+```sh
+yarn run dev
+```
+
 Start development server on `localhost:4141`
 
 ```sh
